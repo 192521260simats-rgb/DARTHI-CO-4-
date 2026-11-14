@@ -1,0 +1,889 @@
+
+
+NAME : K.DARTHI 
+REG NO : 192521260 
+
+
+
+
+
+
+
+
+
+
+1) #include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+
+// Structure for date
+struct Date {
+int day;
+int month;
+int year;
+};
+
+// Structure for blood pressure
+struct BloodPressure {
+int systolic;
+int diastolic;
+};
+
+// Main patient structure
+struct Patient {
+char name[50];
+int age;
+char phone[15];
+struct BloodPressure bp;
+struct Date visitDate;
+};
+
+// Function to add patient using structure pointer
+void addPatient(struct Patient *p) {
+
+printf("\nEnter patient name: ");
+scanf(" %49[^\n]", p->name);
+
+printf("Enter age: ");
+scanf("%d", &p->age);
+
+printf("Enter phone number: ");
+scanf("%14s", p->phone);
+
+printf("Enter systolic BP: ");
+scanf("%d", &p->bp.systolic);
+
+printf("Enter diastolic BP: ");
+scanf("%d", &p->bp.diastolic);
+
+printf("Enter visit day: ");
+scanf("%d", &p->visitDate.day);
+
+printf("Enter visit month: ");
+scanf("%d", &p->visitDate.month);
+
+printf("Enter visit year: ");
+scanf("%d", &p->visitDate.year);
+
+printf("\nPatient added successfully!\n");
+}
+
+// Function to display patients
+void displayPatients(struct Patient p[], int count) {
+
+printf("\n----- PATIENT DETAILS -----\n");
+
+for (int i = 0; i < count; i++) {
+
+printf("\nName: %s", p[i].name);
+printf("\nAge: %d", p[i].age);
+printf("\nPhone: %s", p[i].phone);
+
+printf("\nBlood Pressure: %d/%d",
+p[i].bp.systolic,
+p[i].bp.diastolic);
+
+printf("\nVisit Date: %02d/%02d/%04d\n",
+p[i].visitDate.day,
+p[i].visitDate.month,
+p[i].visitDate.year);
+}
+}
+
+// Function to sort patients by age
+void sortPatients(struct Patient p[], int count) {
+
+struct Patient temp;
+
+for (int i = 0; i < count - 1; i++) {
+for (int j = 0; j < count - i - 1; j++) {
+
+if (p[j].age > p[j + 1].age) {
+
+temp = p[j];
+p[j] = p[j + 1];
+p[j + 1] = temp;
+}
+}
+}
+
+printf("\nPatients sorted by age successfully!\n");
+}
+
+int main() {
+
+struct Patient patients[MAX];
+int count, choice;
+
+printf("===== HEALTH CENTRE PATIENT REGISTER =====\n");
+
+printf("Enter number of patients: ");
+scanf("%d", &count);
+
+if (count < 1 || count > MAX) {
+printf("Invalid number of patients!\n");
+return 1;
+}
+
+// Add patient details
+for (int i = 0; i < count; i++) {
+
+printf("\nEnter details of patient %d\n", i + 1);
+
+addPatient(&patients[i]);
+}
+
+do {
+
+printf("\n===== MENU =====\n");
+printf("1. Display Patients\n");
+printf("2. Sort Patients by Age\n");
+printf("3. Exit\n");
+
+printf("Enter your choice: ");
+scanf("%d", &choice);
+
+switch (choice) {
+
+case 1:
+displayPatients(patients, count);
+break;
+
+case 2:
+sortPatients(patients, count);
+displayPatients(patients, count);
+break;
+
+case 3:
+printf("Exiting program...\n");
+break;
+
+default:
+printf("Invalid choice!\n");
+}
+
+} while (choice != 3);
+
+return 0;
+}
+
+
+
+OUTPUT )
+===== HEALTH CENTRE PATIENT REGISTER =====
+Enter number of patients: 2
+
+Enter details of patient 1
+
+Enter patient name: ARUL KUMAR
+Enter age: 45
+Enter phone number: 9876543210
+Enter systolic BP: 120
+Enter diastolic BP: 80
+Enter visit day: 10
+Enter visit month: 11
+Enter visit year: 2026
+
+Patient added successfully!
+
+Enter details of patient 2
+
+Enter patient name: RAVI
+Enter age: 25
+Enter phone number: 9876543211
+Enter systolic BP: 110
+Enter diastolic BP: 17
+Enter visit day: 20
+Enter visit month: 11
+Enter visit year: 2026
+
+Patient added successfully!
+
+===== MENU =====
+1. Display Patients
+2. Sort Patients by Age
+3. Exit
+Enter your choice: 2
+
+Patients sorted by age successfully!
+
+----- PATIENT DETAILS -----
+
+Name: RAVI
+Age: 25
+Phone: 9876543211
+Blood Pressure: 110/17
+Visit Date: 20/11/2026
+
+Name: ARUL KUMAR
+Age: 45
+Phone: 9876543210
+Blood Pressure: 120/80
+Visit Date: 10/11/2026
+
+===== MENU =====
+1. Display Patients
+2. Sort Patients by Age
+3. Exit
+Enter your choice: 2
+
+Patients sorted by age successfully!
+
+----- PATIENT DETAILS -----
+
+Name: RAVI
+Age: 25
+Phone: 9876543211
+Blood Pressure: 110/17
+Visit Date: 20/11/2026
+
+Name: ARUL KUMAR
+Age: 45
+Phone: 9876543210
+Blood Pressure: 120/80
+Visit Date: 10/11/2026
+
+===== MENU =====
+1. Display Patients
+2. Sort Patients by Age
+3. Exit
+Enter your choice: 3
+Exiting program...
+
+
+
+2)
+
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+
+// Structure for date
+struct Date {
+int day, month, year;
+};
+
+// Structure for address
+struct Address {
+char city[30];
+int pincode;
+};
+
+// Structure for sender and receiver
+struct Person {
+char name[30];
+struct Address address;
+};
+
+// Main parcel structure
+struct Parcel {
+int id;
+float weight;
+struct Date booking;
+struct Person sender;
+struct Person receiver;
+char service[15];
+float charge;
+};
+
+// Function to display parcel using pointer
+void printParcel(struct Parcel *p) {
+
+printf("\nParcel ID: %d", p->id);
+printf("\nWeight: %.1f kg", p->weight);
+
+printf("\nSender: %s", p->sender.name);
+printf("\nSender City: %s", p->sender.address.city);
+printf("\nSender PIN: %d", p->sender.address.pincode);
+
+printf("\nReceiver: %s", p->receiver.name);
+printf("\nReceiver City: %s", p->receiver.address.city);
+printf("\nReceiver PIN: %d", p->receiver.address.pincode);
+
+printf("\nBooking Date: %02d/%02d/%04d",
+p->booking.day,
+p->booking.month,
+p->booking.year);
+
+printf("\nService: %s", p->service);
+printf("\nCharge: Rs. %.2f\n", p->charge);
+}
+
+// Function to sort parcels by weight
+void sortByWeight(struct Parcel p[], int n) {
+
+struct Parcel temp;
+int swaps = 0;
+int bytes = 0;
+
+for (int i = 0; i < n - 1; i++) {
+
+for (int j = 0; j < n - i - 1; j++) {
+
+if (p[j].weight > p[j + 1].weight) {
+
+temp = p[j];
+p[j] = p[j + 1];
+p[j + 1] = temp;
+
+swaps++;
+bytes += 3 * sizeof(struct Parcel);
+}
+}
+}
+
+printf("\nParcels sorted by weight!\n");
+printf("Total swaps: %d\n", swaps);
+printf("Bytes copied: %d\n", bytes);
+}
+
+// Function to search parcels by receiver city
+void searchCity(struct Parcel p[], int n) {
+
+char city[30];
+int found = 0;
+
+printf("\nEnter receiver city: ");
+scanf("%29s", city);
+
+printf("\n--- PARCELS IN %s ---\n", city);
+
+for (int i = 0; i < n; i++) {
+
+if (strcmp(p[i].receiver.address.city, city) == 0) {
+
+printParcel(&p[i]);
+found = 1;
+}
+}
+
+if (found == 0) {
+printf("No parcels found in this city.\n");
+}
+}
+
+int main() {
+
+struct Parcel list[MAX];
+int n, choice;
+
+printf("===== COURIER PARCEL TRACKING =====\n");
+
+printf("Enter number of parcels: ");
+scanf("%d", &n);
+
+if (n < 1 || n > MAX) {
+printf("Invalid number of parcels!\n");
+return 1;
+}
+
+// Get parcel details
+for (int i = 0; i < n; i++) {
+
+printf("\nEnter details of parcel %d\n", i + 1);
+
+printf("Enter parcel ID: ");
+scanf("%d", &list[i].id);
+
+printf("Enter weight: ");
+scanf("%f", &list[i].weight);
+
+printf("Enter booking day: ");
+scanf("%d", &list[i].booking.day);
+
+printf("Enter booking month: ");
+scanf("%d", &list[i].booking.month);
+
+printf("Enter booking year: ");
+scanf("%d", &list[i].booking.year);
+
+printf("Enter sender name: ");
+scanf("%29s", list[i].sender.name);
+
+printf("Enter sender city: ");
+scanf("%29s", list[i].sender.address.city);
+
+printf("Enter sender PIN: ");
+scanf("%d", &list[i].sender.address.pincode);
+
+printf("Enter receiver name: ");
+scanf("%29s", list[i].receiver.name);
+
+printf("Enter receiver city: ");
+scanf("%29s", list[i].receiver.address.city);
+
+printf("Enter receiver PIN: ");
+scanf("%d", &list[i].receiver.address.pincode);
+
+printf("Enter service (Normal/Express): ");
+scanf("%14s", list[i].service);
+
+printf("Enter charge: ");
+scanf("%f", &list[i].charge);
+}
+
+do {
+
+printf("\n===== MENU =====\n");
+printf("1. Display All Parcels\n");
+printf("2. Sort Parcels by Weight\n");
+printf("3. Search by Receiver City\n");
+printf("4. Exit\n");
+
+printf("Enter your choice: ");
+scanf("%d", &choice);
+
+switch (choice) {
+
+case 1:
+for (int i = 0; i < n; i++) {
+printParcel(&list[i]);
+}
+break;
+
+case 2:
+sortByWeight(list, n);
+
+printf("\n--- SORTED PARCELS ---\n");
+
+for (int i = 0; i < n; i++) {
+printParcel(&list[i]);
+}
+break;
+
+case 3:
+searchCity(list, n);
+break;
+
+case 4:
+printf("Exiting program...\n");
+break;
+
+default:
+printf("Invalid choice!\n");
+}
+
+} while (choice != 4);
+
+return 0;
+}  
+
+
+
+
+
+OUTPUT
+Enter your choice: 2
+
+Parcels sorted by weight!
+Total swaps: 2
+
+--- SORTED PARCELS ---
+
+Parcel ID: 502
+Weight: 1.2 kg
+Sender: Kumar
+Sender City: Chennai
+Sender PIN: 600077
+Receiver: Priya
+Receiver City: Chennai
+Receiver PIN: 600078
+Booking Date: 12/10/2026
+Service: Express
+Charge: Rs. 150.00
+
+Parcel ID: 503
+Weight: 2.8 kg
+Sender: Raj
+Sender City: Coimbatore
+Sender PIN: 641001
+Receiver: Anu
+Receiver City: Coimbatore
+Receiver PIN: 641002
+Booking Date: 13/10/2026
+Service: Normal
+Charge: Rs. 80.00
+
+Parcel ID: 501
+Weight: 4.5 kg
+Sender: Arun
+Sender City: Madurai
+Sender PIN: 625001
+Receiver: Ravi
+Receiver City: Madurai
+Receiver PIN: 625002
+Booking Date: 12/10/2026
+Service: Normal
+Charge: Rs. 100.00
+
+
+3) #include <stdio.h>
+
+enum kind { TEMPERATURE, HUMIDITY, STATUS };
+
+struct reading {
+enum kind type; /* tag: tells which union member is valid */
+union {
+float celsius;
+int percent;
+char status[8];
+} value;
+};
+
+void show(const struct reading *r)
+{
+switch (r->type) {
+case TEMPERATURE:
+printf("Temp %.1f C\n", r->value.celsius);
+break;
+case HUMIDITY:
+printf("Humidity %d %%\n", r->value.percent);
+break;
+case STATUS:
+printf("Status %s\n", r->value.status);
+break;
+}
+}
+
+int main(void)
+{
+struct reading log[3] = {
+{TEMPERATURE, {.celsius = 31.5f}},
+{HUMIDITY, {.percent = 68}},
+{STATUS, {.status = "OK"}}
+};
+printf("sizeof union = %zu, sizeof struct reading = %zu\n",
+sizeof log[0].value, sizeof log[0]);
+for (int i = 0; i < 3; i++) show(&log[i]);
+return 0;
+}
+#include <stdio.h>
+
+enum kind { TEMPERATURE, HUMIDITY, STATUS };
+
+struct reading {
+enum kind type; /* tag: tells which union member is valid */
+union {
+float celsius;
+int percent;
+char status[8];
+} value;
+};
+
+void show(const struct reading *r)
+{
+switch (r->type) {
+case TEMPERATURE:
+printf("Temp %.1f C\n", r->value.celsius);
+break;
+case HUMIDITY:
+printf("Humidity %d %%\n", r->value.percent);
+break;
+case STATUS:
+printf("Status %s\n", r->value.status);
+break;
+}
+}
+
+int main(void)
+{
+struct reading log[3] = {
+{TEMPERATURE, {.celsius = 31.5f}},
+{HUMIDITY, {.percent = 68}},
+{STATUS, {.status = "OK"}}
+};
+printf("sizeof union = %zu, sizeof struct reading = %zu\n",
+sizeof log[0].value, sizeof log[0]);
+for (int i = 0; i < 3; i++) show(&log[i]);
+return 0;
+}
+#include <stdio.h>
+
+enum kind { TEMPERATURE, HUMIDITY, STATUS };
+
+struct reading {
+enum kind type; /* tag: tells which union member is valid */
+union {
+float celsius;
+int percent;
+char status[8];
+} value;
+};
+
+void show(const struct reading *r)
+{
+switch (r->type) {
+case TEMPERATURE:
+printf("Temp %.1f C\n", r->value.celsius);
+break;
+case HUMIDITY:
+printf("Humidity %d %%\n", r->value.percent);
+break;
+case STATUS:
+printf("Status %s\n", r->value.status);
+break;
+}
+}
+
+int main(void)
+{
+struct reading log[3] = {
+{TEMPERATURE, {.celsius = 31.5f}},
+{HUMIDITY, {.percent = 68}},
+{STATUS, {.status = "OK"}}
+};
+printf("sizeof union = %zu, sizeof struct reading = %zu\n",
+sizeof log[0].value, sizeof log[0]);
+for (int i = 0; i < 3; i++) show(&log[i]);
+return 0;
+}
+
+
+
+OUTPUT : 
+ sizeof union = 8, sizeof struct reading = 12
+Temp 31.5 C
+Humidity 68 %
+Status OK
+
+  
+4) #include <stdio.h>
+
+struct account {
+int number;
+float balance;
+};
+
+/* Task 4.2: Function showing pass-by-value creates a separate copy */
+void addInterestByValue(struct account a, float rate) {
+printf("Address inside addInterestByValue(): %p\n", (void *)&a);
+a.balance = a.balance + a.balance * rate / 100;
+}
+
+/* Task 4.3: Repaired function using a structure pointer and arrow operator */
+void addInterest(struct account *a, float rate) {
+a->balance = a->balance + a->balance * rate / 100;
+}
+
+int main(void) {
+struct account list[3] = {{101, 5000}, {102, 12000}, {103, 800}};
+
+/* Task 4.2: Construct Evidence */
+printf("--- Task 4.2: Address Evidence ---\n");
+printf("Address in main() (&list[0]): %p\n", (void *)&list[0]);
+addInterestByValue(list[0], 4);
+printf("Balance after pass-by-value: %.2f (Unchanged)\n\n", list[0].balance);
+
+/* Task 4.3: Repair the Program */
+printf("--- Task 4.3: Repaired Output ---\n");
+struct account *p = list;
+
+for (int i = 0; i < 3; i++) {
+addInterest(p + i, 4);
+}
+
+for (int i = 0; i < 3; i++) {
+printf("%d %.2f\n", (p + i)->number, (p + i)->balance);
+}
+
+return 0;
+}  
+
+
+
+
+
+
+OUTPUT :  
+
+
+ Task 4.2: Address Evidence ---
+Address in main() (&list[0]): 0x7ffd81dd4580
+Address inside addInterestByValue(): 0x7ffd81dd4568
+Balance after pass-by-value: 5000.00 (Unchanged)
+
+Task 4.3: Repaired Output ---
+101 5200.00
+102 12480.00
+103 832.00
+
+
+5) #include <stdio.h>
+
+/* Issues the next mess token number, starting from 1001. */
+int next_token(void)
+{
+static int token = 1000;
+return ++token;
+}
+
+/* The same logic with an automatic variable, for comparison. */
+int auto_token(void)
+{
+int token = 1000;
+return ++token;
+}
+
+int main(void)
+{
+int s1 = next_token(), s2 = next_token(), s3 = next_token();
+int a1 = auto_token(), a2 = auto_token(), a3 = auto_token();
+printf("static: %d %d %d\n", s1, s2, s3);
+printf("auto : %d %d %d\n", a1, a2, a3);
+return 0;
+}
+
+
+
+OUTPUT : 
+
+
+static: 1001 1002 1003
+auto : 1001 1001 1001
+
+
+
+6) #include <stdio.h>
+#include <string.h>
+
+struct Date {
+int day, month, year;
+};
+
+struct Time {
+int hour, min;
+};
+
+enum ItemType { PACKAGED, COOKED, COMBO };
+
+struct Item {
+int id;
+char name[30];
+float price;
+int stock;
+int sold;
+enum ItemType type;
+union {
+struct Date expiry; /* For PACKAGED */
+struct Time prep_time; /* For COOKED */
+int combo_ids[3]; /* For COMBO (up to 3 item IDs) */
+} detail;
+};
+
+/* Helper: Convert Date to total days for simple comparison */
+int toDays(struct Date d) {
+return d.year * 365 + d.month * 30 + d.day;
+}
+
+/* Record a sale safely using structure pointer */
+void recordSale(struct Item *item, int qty) {
+static int bill_no = 100; /* Static counter persists across calls */
+bill_no++;
+
+if (qty <= 0) {
+printf("[Bill #%d] Invalid quantity for %s.\n", bill_no, item->name);
+return;
+}
+if (qty > item->stock) {
+printf("[Bill #%d] FAILED: Requested %d of '%s', but only %d in stock.\n",
+bill_no, qty, item->name, item->stock);
+return;
+}
+
+item->stock -= qty;
+item->sold += qty;
+printf("[Bill #%d] SOLD: %d x %s = Rs. %.2f (Remaining stock: %d)\n",
+bill_no, qty, item->name, qty * item->price, item->stock);
+}
+
+/* Warn about packaged items expiring within 2 days */
+void checkExpiry(const struct Item *menu, int n, struct Date today) {
+printf("\n--- Expiry Warnings (Within 2 Days of %02d/%02d/%d) ---\n",
+today.day, today.month, today.year);
+int found = 0;
+for (int i = 0; i < n; i++) {
+if (menu[i].type == PACKAGED) {
+int diff = toDays(menu[i].detail.expiry) - toDays(today);
+if (diff >= 0 && diff <= 2) {
+printf("WARNING: '%s' expires in %d day(s) (%02d/%02d/%d)!\n",
+menu[i].name, diff,
+menu[i].detail.expiry.day,
+menu[i].detail.expiry.month,
+menu[i].detail.expiry.year);
+found = 1;
+}
+}
+}
+if (!found) printf("No items expiring soon.\n");
+}
+
+/* Sort items by revenue (descending) and print summary */
+void printSortedSummary(struct Item *menu, int n) {
+for (int i = 0; i < n - 1; i++) {
+for (int j = 0; j < n - i - 1; j++) {
+float rev1 = menu[j].sold * menu[j].price;
+float rev2 = menu[j + 1].sold * menu[j + 1].price;
+if (rev1 < rev2) {
+struct Item temp = menu[j];
+menu[j] = menu[j + 1];
+menu[j + 1] = temp;
+}
+}
+}
+
+printf("\n--- Day's Bill Summary (Sorted by Revenue) ---\n");
+printf("%-18s %-6s %-8s %-10s\n", "Item", "Sold", "Stock", "Revenue");
+float total_rev = 0;
+for (int i = 0; i < n; i++) {
+float rev = menu[i].sold * menu[i].price;
+total_rev += rev;
+printf("%-18s %-6d %-8d Rs. %.2f\n",
+menu[i].name, menu[i].sold, menu[i].stock, rev);
+}
+printf("Total Canteen Revenue: Rs. %.2f\n", total_rev);
+}
+
+int main(void) {
+struct Date today = {14, 11, 2026};
+
+struct Item menu[4] = {
+{1, "Mango Juice", 30.0f, 10, 0, PACKAGED, {.expiry = {15, 11, 2026}}},
+{2, "Veg Biryani", 80.0f, 15, 0, COOKED, {.prep_time = {12, 30}}},
+{3, "Lunch Combo", 100.0f, 5, 0, COMBO, {.combo_ids = {1, 2, 0}}},
+{4, "Biscuit Pack", 20.0f, 20, 0, PACKAGED, {.expiry = {25, 11, 2026}}}
+};
+
+printf("--- Recording Sales ---\n");
+recordSale(&menu[0], 3); /* Normal sale */
+recordSale(&menu[1], 4); /* Normal sale */
+recordSale(&menu[2], 2); /* Normal combo sale */
+recordSale(&menu[2], 10); /* Exceeds stock (only 3 left) */
+
+checkExpiry(menu, 4, today);
+printSortedSummary(menu, 4);
+
+return 0;
+}
+
+
+
+
+
+OUTPUT :  Recording Sales ---
+[Bill #101] SOLD: 3 x Mango Juice = Rs. 90.00 (Remaining stock: 7)
+[Bill #102] SOLD: 4 x Veg Biryani = Rs. 320.00 (Remaining stock: 11)
+[Bill #103] SOLD: 2 x Lunch Combo = Rs. 200.00 (Remaining stock: 3)
+[Bill #104] FAILED: Requested 10 of 'Lunch Combo', but only 3 in stock.
+
+--- Expiry Warnings (Within 2 Days of 14/11/2026) ---
+WARNING: 'Mango Juice' expires in 1 day(s) (15/11/2026)!
+
+--- Day's Bill Summary (Sorted by Revenue) ---
+Item Sold Stock Revenue
+Veg Biryani 4 11 Rs. 320.00
+Lunch Combo 2 3 Rs. 200.00
+Mango Juice 3 7 Rs. 90.00
+Biscuit Pack 0 20 Rs. 0.00
+Total Canteen Revenue: Rs. 610.00
